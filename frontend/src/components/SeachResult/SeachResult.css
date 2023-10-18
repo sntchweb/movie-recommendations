@@ -1,0 +1,139 @@
+.search {
+	display: inline-flex;
+	max-height: 213px;
+}
+
+.search_img-container {
+	margin-right: 30px;
+	position: relative;
+}
+
+.search_img {
+	width: 160px;
+	height: 213px;
+	object-fit: cover;
+	border-radius: 6px;
+}
+.search-img-background {
+	display: block;
+	position: relative;
+}
+.search-img-background::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(43, 47, 51, 0.4);
+	opacity: 0;
+}
+.search-img-background:hover:after {
+	opacity: 1;
+	cursor: pointer;
+}
+
+.button__container {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.search_profile {
+	width: 350px;
+	height: 213px;
+	color: white;
+	position: relative;
+}
+
+.search_title {
+	font-family: 'Unbounded';
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 25px;
+	margin: 0;
+	margin-bottom: 15px;
+	cursor: pointer;
+}
+
+.search_title:hover {
+	color: #ffcc33;
+}
+
+.search_title_type_hover {
+	color: #ffcc33;
+}
+
+.search_h3 {
+	max-height: 36px;
+	color: #9ca3af;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+	margin: 0;
+	margin-bottom: 10px;
+	overflow: hidden;
+	/* white-space: nowrap; */
+	text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 1440px) {
+	.search {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.search_profile {
+		width: 350px;
+	}
+}
+
+@media screen and (max-width: 1280px) {
+	.search_profile {
+		width: 290px;
+	}
+}
+
+@media screen and (max-width: 1070px) {
+	.search_profile {
+		width: 257px;
+	}
+}
+@media screen and (max-width: 1000px) {
+	.search {
+		justify-content: center;
+	}
+}
+@media screen and (max-width: 550px) {
+	.search {
+		max-height: 135px;
+		justify-content: center;
+		gap: 15px;
+	}
+	.search_img {
+		width: 100px;
+		height: 135px;
+		display: block;
+	}
+	.search_img-container {
+		margin-right: 0;
+	}
+	.search_h3 {
+		line-height: 16px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		margin-bottom: 5px;
+	}
+	.search_title {
+		margin-bottom: 10px;
+		line-height: 20px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+	.search_profile {
+		height: 135px;
+		width: 205px;
+	}
+}

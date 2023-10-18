@@ -1,0 +1,83 @@
+.backbutton {
+	font-family: 'Unbounded';
+	width: 70px;
+	height: 30px;
+	font-size: 18px;
+	line-height: 30px;
+	font-weight: 300;
+	margin: 0 0px 0px 155px;
+	cursor: pointer;
+	color: #ffcc33;
+	transition: background-color 0.2s;
+	background-color: #0c0c0c;
+	outline: none;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	display: flex;
+	left: -42px;
+	top: 130px;
+}
+
+.backbutton_type_signin {
+	position: absolute;
+}
+
+.backbutton_type_preferences {
+	margin-left: 0;
+}
+
+@media screen and (max-width: 1300px) {
+	.backbutton_type_preferences {
+		margin-left: 50px;
+	}
+}
+
+@media screen and (max-width: 1297px) {
+	.backbutton {
+		margin: 50px 0px 0px 50px;
+	}
+	.backbutton_type_signin {
+		left: 50px;
+		margin: 10px 0 0 0;
+	}
+}
+
+.arrow {
+	align-self: center;
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+}
+
+.button:disabled {
+	color: #fff;
+	background-color: #9ca3af;
+	cursor: not-allowed;
+}
+
+.backbutton:hover {
+	opacity: 0.3;
+}
+
+.backbutton_type_preferences {
+	margin-left: 50px;
+}
+@media screen and (max-width: 1000px) {
+	.backbutton_type_signin {
+		margin-top: 0;
+		left: 4%;
+		background-color: transparent;
+	}
+}
+@media screen and (max-width: 650px) {
+	.backbutton_type_preferences {
+		align-self: flex-start;
+	}
+}
+@media screen and (max-width: 500px) {
+	.backbutton_type_preferences {
+		margin-left: 0;
+	}
+}

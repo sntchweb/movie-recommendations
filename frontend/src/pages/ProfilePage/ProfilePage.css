@@ -1,0 +1,414 @@
+.profile {
+	background-color: #0c0c0c;
+	max-width: 1110px;
+	margin: 0 auto;
+	padding: 68px 0 0;
+	display: flex;
+	flex-direction: column;
+	gap: 100px;
+}
+
+.profile__container {
+	display: flex;
+	gap: 220px;
+}
+.profile__container_type_mobile {
+	display: none;
+}
+
+.profile__genres-btn {
+	display: none;
+	width: 100%;
+	padding: 0;
+	margin: 30px 0 0 0;
+	align-items: center;
+	justify-content: space-between;
+	text-decoration: none;
+}
+
+.profile__genres-btn-text {
+	color: white;
+	font-size: 16px;
+	font-weight: 500;
+	margin: 0;
+	padding: 0;
+}
+
+.profile__genres-btn-img {
+	width: 25px;
+	height: 25px;
+}
+
+.profile__form-container {
+	flex-grow: 1;
+}
+
+.profile__title {
+	color: #fff;
+	font-family: 'Unbounded';
+	font-size: 40px;
+	line-height: 50px;
+	font-style: normal;
+	font-weight: 700;
+	margin: 0;
+	padding: 0 0 50px;
+}
+
+.profile__form {
+	display: flex;
+	flex-direction: column;
+	max-width: 540px;
+	gap: 20px;
+}
+
+.profile__pseudo-input-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.profile__input-link {
+	align-self: flex-end;
+	color: #9ca3af;
+	font-size: 14px;
+	line-height: 18px;
+	font-weight: 500;
+}
+
+.profile__radio-title {
+	color: #fff;
+	margin: 0;
+	padding: 0;
+}
+
+.profile__radio-label {
+	color: #fff;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.profile__radio-buttons {
+	display: flex;
+	gap: 40px;
+	padding: 11px 0 0 11px;
+}
+
+.profile__radio-button[type='radio'] {
+	position: absolute;
+	overflow: hidden;
+	outline: none;
+	clip-path: inset(0 0 0 0);
+	appearance: none;
+}
+
+.profile__radio-button[type='radio']:hover {
+	cursor: pointer;
+}
+
+.profile__radio-pseudo-item {
+	min-width: 25px;
+	height: 25px;
+	border: 2px solid #9ca3af;
+	border-radius: 80px;
+	display: flex;
+	cursor: pointer;
+	box-sizing: border-box;
+	text-align: center;
+	transition: color 0.3s, border 0.3s, opacity 0.3s;
+	background-image: none;
+}
+
+.profile__radio-button[type='radio']:checked + .profile__radio-pseudo-item {
+	background-image: radial-gradient(circle, #ffcc33 47%, #0c0c0c 47%);
+	transition: background-image 0.3s;
+	border: 2px solid #ffcc33;
+}
+
+.profile__radio-button[type='radio']:hover + .profile__radio-pseudo-item {
+	color: #d1d5db;
+	opacity: 0.6;
+	cursor: pointer;
+}
+
+.profile__radio-text {
+	color: #fff;
+	padding: 0 0 0 19px;
+}
+
+.profile__avatar-container {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: space-between;
+}
+
+.profile__avatar {
+	background-color: transparent;
+	border-radius: 100px;
+	border: 3px solid white;
+	/* background-color: #9ca3af; */
+	border-radius: 100px;
+	max-width: 200px;
+	max-height: 200px;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+.profile__avatar_type_letter {
+	background-color: #9ca3af;
+}
+.profile__avatar-img {
+	width: 60px;
+	height: 60px;
+	object-fit: contain;
+}
+
+.profile__avatar-btn {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	background: url('../../images/avatar/pencil.svg') #e5e7eb no-repeat center;
+	border: none;
+	border-radius: 40px;
+	transition: background-color 0.5s;
+}
+
+.profile__avatar-btn:hover {
+	background-color: #9ca3af;
+	cursor: pointer;
+}
+
+.profile__user-first-letter {
+	margin: 0;
+	padding: 0;
+	font-size: 60px;
+	font-weight: 700;
+	line-height: 74px;
+}
+
+.profile__buttons {
+	min-width: 350px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.profile__delete-button {
+	color: #ea4335;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 20px;
+	text-decoration: underline;
+	background-color: inherit;
+	border: none;
+	cursor: pointer;
+	margin: 15px 0;
+	padding: 0 0 0 30px;
+	max-width: 170px;
+	align-self: center;
+	background-image: url(../../images/deleteRedIcon.svg);
+	background-repeat: no-repeat;
+	background-position: left;
+	transition: 0.3s ease;
+}
+
+.profile__delete-button:hover {
+	color: #ff8577;
+	background-image: url(../../images/deletePinkIcon.svg);
+}
+
+.profile__preferences-button {
+	width: 540px;
+	font-size: 20px;
+	line-height: 26px;
+	font-weight: 700;
+	padding: 15px 0;
+	text-align: center;
+	background-color: #9ca3af;
+	color: white;
+	border-radius: 10px;
+	cursor: pointer;
+	margin: 0 auto;
+	text-decoration: none;
+}
+
+.profile__genres-container {
+	display: flex;
+	flex-direction: column;
+	padding: 0 0 100px;
+}
+
+.profile__genres-title {
+	color: #fff;
+	font-family: Unbounded;
+	font-size: 25px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 31px;
+	margin: 0;
+	padding: 0 0 52px;
+}
+
+.profile__genres {
+	margin: 0;
+	padding: 0 0 15px;
+	list-style-type: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 30px;
+}
+
+.profile__genres-link {
+	margin: 0 0 0 auto;
+	padding: 0;
+	color: #9ca3af;
+	font-family: Mulish;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 23px;
+	letter-spacing: -0.54px;
+	text-decoration: underline;
+	cursor: pointer;
+	transition: color 0.3s;
+}
+
+.profile__genres-link:hover {
+	color: #fff;
+}
+
+@media screen and (max-width: 1300px) {
+	.profile__genres {
+		column-gap: 20px;
+	}
+
+	.profile__container {
+		gap: 0;
+	}
+
+	.profile {
+		max-width: 924px;
+		gap: 90px;
+	}
+
+	.profile__delete-button {
+		margin-bottom: 4px;
+		align-self: flex-end;
+		margin-right: 67px;
+	}
+
+	.profile__radio-buttons {
+		gap: 60px;
+	}
+
+	.profile__genres-container {
+		padding-bottom: 90px;
+	}
+}
+
+@media screen and (max-width: 1000px) {
+	.profile {
+		width: 70%;
+	}
+	.profile__genres-btn {
+		display: flex;
+	}
+	.profile__genres-container {
+		display: none;
+	}
+	.profile__container_type_mobile {
+		display: block;
+	}
+	.profile__container_type_desktop {
+		display: none;
+	}
+	.profile__avatar {
+		width: 200px;
+		height: 200px;
+		align-self: center;
+		margin: 30px 0 42px 0;
+	}
+	.profile__form-container {
+		display: flex;
+		flex-direction: column;
+	}
+	.profile__title {
+		padding-bottom: 0;
+	}
+	.profile__form {
+		max-width: 100%;
+		gap: 8px;
+	}
+	.profile__avatar-container {
+		align-items: center;
+		justify-content: center;
+	}
+	.profile__buttons {
+		width: 100%;
+	}
+	.profile__delete-button {
+		align-self: center;
+		margin: 85px 0 35px 0;
+	}
+}
+@media screen and (max-width: 800px) {
+	.profile {
+		width: 88.89%;
+	}
+	.profile__avatar {
+		width: 170px;
+		height: 170px;
+	}
+	.profile__avatar-btn {
+		right: 5px;
+		bottom: 5px;
+	}
+}
+@media screen and (max-width: 600px) {
+	.profile__avatar {
+		width: 150px;
+		height: 150px;
+	}
+	.profile__title {
+		font-size: 26px;
+	}
+	.profile__radio-text {
+		font-size: 16px;
+		padding-left: 6px;
+	}
+	.profile__radio-buttons {
+		padding: 8px 0 0 8px;
+	}
+	.profile__pseudo-input-container {
+		position: relative;
+	}
+	.profile__input-link {
+		position: absolute;
+		bottom: -20px;
+		right: 0;
+	}
+}
+@media screen and (max-width: 450px) {
+	.profile__avatar {
+		width: 100px;
+		height: 100px;
+	}
+	.profile__avatar-img {
+		width: 30px;
+		height: 30px;
+	}
+	.profile__user-first-letter {
+		font-size: 30px;
+	}
+	.profile__avatar-btn {
+		width: 20px;
+		height: 20px;
+		background-size: 12px 12px;
+	}
+}
+/* до 670px, далее добавлять кнопку */

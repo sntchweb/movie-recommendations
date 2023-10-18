@@ -1,0 +1,43 @@
+.rated {
+	display: flex;
+	color: white;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 12px;
+	margin-top: 15px;
+}
+
+.rated_search {
+	color: #2b2f33;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+}
+
+.rated_row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 20px;
+}
+
+.rated_img {
+	margin-right: 5px;
+}
+@media screen and (max-width: 1330px) {
+	.rated {
+		margin-top: 20px;
+	}
+}
+@media screen and (max-width: 1260px) {
+	.rated {
+		margin-left: 6px;
+		margin-top: 18px;
+	}
+}
+
+@media screen and (max-width: 360px) {
+	.rated {
+		/* margin: 0; */
+	}
+}

@@ -1,0 +1,93 @@
+.button {
+	width: 100%;
+	max-width: 540px;
+	font-size: 20px;
+	line-height: 26px;
+	font-weight: 700;
+	padding: 15px 0;
+	align-self: center;
+	background-color: #fc3;
+	color: #2b2f33;
+	outline: none;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.button:hover {
+	background-color: #c90;
+}
+
+.button:disabled {
+	color: #fff;
+	background-color: #9ca3af;
+	cursor: not-allowed;
+}
+
+.button:disabled:hover {
+	opacity: 1;
+}
+
+@media screen and (max-width: 1300px) {
+	.button {
+		width: 288px;
+		align-self: end;
+	}
+
+	.button_type_toMain {
+		width: 540px;
+		align-self: center;
+	}
+	.button_type_toMain-sign-in {
+		width: 540px;
+		align-self: center;
+	}
+
+	.button_type_preferences {
+		margin-right: 50px;
+	}
+}
+
+.button_type_preferences {
+	margin-right: 50px;
+}
+@media screen and (max-width: 1000px) {
+	.button_type_profile {
+		align-self: center;
+		max-width: 280px;
+		margin-top: 50px;
+	}
+	.button_type_preferences {
+		width: 100%;
+		margin: 0 auto;
+	}
+	.button_type_toMain-sign-in {
+		width: 100%;
+		font-size: 16px;
+		line-height: 18px;
+		margin-top: 15px;
+	}
+}
+@media screen and (max-width: 650px) {
+	.button_type_toMain {
+		width: 280px;
+		font-size: 16px;
+		line-height: 18px;
+	}
+	.button {
+		padding: 11px 0;
+	}
+}
+@media screen and (max-width: 600px) {
+	.button_type_profile {
+		font-size: 16px;
+		padding: 7px 0;
+	}
+	.button_type_preferences {
+		max-width: 280px;
+		font-size: 16px;
+		line-height: 18px;
+		padding: 11px 0;
+	}
+}

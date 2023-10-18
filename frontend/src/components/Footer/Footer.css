@@ -1,0 +1,91 @@
+.footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 203px;
+	background-color: #4b556333;
+	max-width: 1440px;
+	margin: 0 auto;
+}
+
+.footer__desc {
+	width: 500px;
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 22.59px;
+	text-align: left;
+	color: #fff;
+	margin-left: 120px;
+}
+
+.footer__scroll {
+	width: 80px;
+	position: fixed;
+	bottom: 60px;
+	left: calc(50% + 580px);
+	z-index: 1000;
+	background: transparent;
+	border: 1px solid;
+	border-radius: 20px;
+	height: 80px;
+	opacity: 0.4;
+	color: #9ca3af;
+	transition: all 1s;
+}
+
+.footer__scroll:hover {
+	opacity: 1;
+	cursor: pointer;
+}
+
+.footer__scroll-button {
+}
+
+.scroll-hidden {
+	visibility: hidden;
+	opacity: 0;
+	transition: all 2s;
+}
+
+@media screen and (max-width: 1320px) {
+	.footer__scroll {
+		left: calc(50% + 430px);
+	}
+}
+
+@media screen and (max-width: 1260px) {
+	.footer__desc {
+		margin-left: 50px;
+	}
+}
+
+@media screen and (max-width: 1230px) {
+	.footer__scroll {
+		left: calc(50% + 370px);
+	}
+}
+
+@media screen and (max-width: 1100px) {
+	.footer__scroll {
+		left: calc(50% + 365px);
+		bottom: 75px;
+	}
+}
+
+@media screen and (max-width: 360px) {
+	.footer {
+		height: 60px;
+		max-width: 360px;
+	}
+
+	.footer__desc {
+		width: 153px;
+		height: 36px;
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 17px;
+		text-align: left;
+		color: #fff;
+		margin-left: 20px;
+	}
+}

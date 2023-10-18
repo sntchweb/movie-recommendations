@@ -1,0 +1,104 @@
+.moviepage-description {
+	display: flex;
+	flex-direction: row;
+	margin: 65px 0 0 0;
+	grid-area: description;
+}
+
+.moviepage-description__about {
+	margin: 0 0 0 97px;
+}
+
+.moviepage-description__about__container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 255px;
+}
+
+.moviepage-description__about__text_add {
+	margin: 0;
+	padding: 0;
+	color: var(--neutral-500, #9ca3af);
+	font-size: 16px;
+	font-family: Mulish;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}
+
+.moviepage-description__about__text {
+	margin: 0;
+	padding: 0;
+	color: var(--white, #fff);
+	font-size: 16px;
+	font-family: Mulish;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	white-space: pre-line;
+	text-align: end;
+}
+@media screen and (max-width: 1350px) {
+	.moviepage-description__about {
+		margin: 0;
+	}
+}
+
+@media screen and (max-width: 1260px) {
+	.moviepage-description__about__container {
+		flex-direction: column;
+		align-items: flex-start;
+		width: 209px;
+	}
+	.moviepage-description {
+		margin: 28px 0 0 0;
+	}
+	.moviepage-description__about__text {
+		font-size: 14px;
+		white-space: normal;
+		text-align: start;
+		padding-top: 5px;
+	}
+	.moviepage-description__about__text_add {
+		font-size: 14px;
+	}
+}
+
+@media screen and (max-width: 360px) {
+	.moviepage-description__about__container {
+		flex-direction: row;
+		align-items: flex-start;
+		width: 320px;
+		justify-content: space-between;
+	}
+	.moviepage-description {
+		margin: 28px 0 0 0;
+	}
+	.moviepage-description__about {
+	}
+
+	.moviepage-description__about__text_add {
+		margin: 0;
+		padding: 0;
+		color: var(--neutral-500, #9ca3af);
+		font-size: 16px;
+		font-family: Mulish;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
+	}
+
+	.moviepage-description__about__text {
+		margin: 0;
+		padding: 0;
+		color: var(--white, #fff);
+		font-size: 16px;
+		font-family: Mulish;
+		font-style: normal;
+		font-weight: 500;
+		line-height: normal;
+		white-space: pre-line;
+		text-align: end;
+	}
+}

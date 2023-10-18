@@ -1,0 +1,1 @@
+{"min": {"user": 1.0, "movie_id": 1.0, "genres": 1, "actors": 1, "favorited_genres": 1, "directors": 1, "countries": 1}, "max": {"user": 27.0, "movie_id": 146.0, "genres": 17, "actors": 1011, "favorited_genres": 17, "directors": 145, "countries": 26}, "n": {}, "len": {"genres": 7, "actors": 10, "favorited_genres": 17, "directors": 4, "countries": 4}}

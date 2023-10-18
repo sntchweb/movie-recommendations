@@ -1,0 +1,104 @@
+.error-page {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	height: 100%;
+}
+
+.error-page__status {
+	width: 570px;
+	height: 546px;
+	background-image: url('../../images/projector.png');
+	align-self: center;
+}
+
+.error-page__message {
+	font-family: 'Unbounded';
+	font-size: 35px;
+	line-height: 43px;
+	color: white;
+	margin-block-end: 0px;
+	font-weight: bold;
+}
+
+.error-page__text {
+	font-size: 18px;
+	line-height: 25px;
+	color: var(--neutral-400, #d1d5db);
+	margin-top: 20px;
+	margin-bottom: 65px;
+}
+
+.error-page__button {
+	width: 240px;
+	height: 50px;
+	padding: 12px 10px 15px 10px;
+	border-radius: 10px;
+	gap: 10px;
+	background: transparent;
+	color: #ffffff;
+	border: 1px solid #ffffff;
+	align-self: center;
+	margin-bottom: 65px;
+	cursor: pointer;
+}
+
+.error-page__button-text {
+	font-size: 20px;
+	text-decoration: none;
+	color: white;
+}
+.error-page__button:hover .error-page__button-text {
+	color: #d1d5db;
+}
+.error-page__button:hover {
+	border: 1px solid #d1d5db;
+}
+@media screen and (max-width: 1024px) {
+	.error-page__img {
+		height: 546px;
+		width: 570px;
+		margin-top: -60px;
+	}
+	.error-page__status {
+		background-image: url('../../images/projector_for_1024.png');
+		height: 546px;
+		width: 570px;
+		background-repeat: no-repeat;
+	}
+	.error-page__message {
+		font-weight: 700;
+		margin-top: -20px;
+	}
+}
+@media screen and (max-width: 800px) {
+	.error-page__message {
+		font-size: 26px;
+		line-height: 30px;
+		padding: 50px 20px 0 20px;
+	}
+	.error-page__text {
+		font-size: 16px;
+		line-height: 20px;
+		padding: 0 20px;
+		margin-top: 15px;
+		margin-bottom: 50px;
+	}
+	.error-page__button {
+		width: 280px;
+		height: 40px;
+	}
+	.error-page__button-text {
+		font-size: 16px;
+	}
+	.error-page__img {
+		width: 320px;
+		height: 450px;
+	}
+	.error-page__status {
+		background-image: url('../../images/projector_for_mobile.png');
+		width: 307px;
+		height: 342px;
+	}
+}
