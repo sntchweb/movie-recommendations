@@ -39,7 +39,6 @@ class StringToList(BaseEstimator, TransformerMixin):
 
 
 def user_processing(test_user_slug):
-
     cached_data_path = 'cached_data'
     users_table = 'User-2023-10-14.csv'
     movies_table = 'Movie-2023-10-14.csv'
@@ -50,33 +49,48 @@ def user_processing(test_user_slug):
             fitted_metrics = json.load(f)
             process1 = joblib.load(UTILITY_PATH + 'stage1preprocessor')
             process2 = joblib.load(UTILITY_PATH + 'stage2preprocessor')
-            df_users = pd.read_csv(UTILITY_PATH + f'{cached_data_path}/{users_table}').rename(
-                columns={'id': 'user', 'fav_genres.1': 'favorited_genres'})
-            df_movies = pd.read_csv(UTILITY_PATH + f'{cached_data_path}/{movies_table}').rename(columns={'id': 'movie_id'})
-            df_ratings = pd.read_csv(UTILITY_PATH + f'{cached_data_path}/{ratings_table}').rename(
-                columns={'id': 'rate_id', 'movie': 'movie_id'})
+            df_users = pd.read_csv(
+                UTILITY_PATH + f'{cached_data_path}/{users_table}'
+            ).rename(
+                columns={'id': 'user', 'fav_genres.1': 'favorited_genres'}
+            )
+            df_movies = pd.read_csv(
+                UTILITY_PATH + f'{cached_data_path}/{movies_table}'
+            ).rename(columns={'id': 'movie_id'})
+            df_ratings = pd.read_csv(
+                UTILITY_PATH + f'{cached_data_path}/{ratings_table}'
+            ).rename(columns={'id': 'rate_id', 'movie': 'movie_id'})
 
     except FileNotFoundError:
         with open('data_metrics.json', 'r') as f:
             fitted_metrics = json.load(f)
             process1 = joblib.load('stage1preprocessor')
             process2 = joblib.load('stage2preprocessor')
-            df_users = pd.read_csv(f'.\\{cached_data_path}\\{users_table}').rename(
-                columns={'id': 'user', 'fav_genres.1': 'favorited_genres'})
-            df_movies = pd.read_csv(f'.\\{cached_data_path}\\{movies_table}').rename(columns={'id': 'movie_id'})
-            df_ratings = pd.read_csv(f'.\\{cached_data_path}\\{ratings_table}').rename(
-                columns={'id': 'rate_id', 'movie': 'movie_id'})
+            df_users = pd.read_csv(
+                f'.\\{cached_data_path}\\{users_table}'
+            ).rename(
+                columns={'id': 'user', 'fav_genres.1': 'favorited_genres'}
+            )
+            df_movies = pd.read_csv(
+                f'.\\{cached_data_path}\\{movies_table}'
+            ).rename(columns={'id': 'movie_id'})
+            df_ratings = pd.read_csv(
+                f'.\\{cached_data_path}\\{ratings_table}'
+            ).rename(columns={'id': 'rate_id', 'movie': 'movie_id'})
 
-    multiplied_test_user = pd.concat([df_users[df_users['user'] == test_user_slug]] * len(df_movies), ignore_index=True)
+    multiplied_test_user = pd.concat(
+        [df_users[df_users['user'] == test_user_slug]] * len(df_movies),
+        ignore_index=True,
+    )
 
-    df_test_merged = (
-        pd.concat(
-            [multiplied_test_user, df_movies], axis=1
-        )
-        .merge(
-            df_ratings[df_ratings['user'] == test_user_slug], on=['movie_id', 'user'], how='left'
-        )
-        [[
+    df_test_merged = pd.concat(
+        [multiplied_test_user, df_movies], axis=1
+    ).merge(
+        df_ratings[df_ratings['user'] == test_user_slug],
+        on=['movie_id', 'user'],
+        how='left',
+    )[
+        [
             'user',
             'sex',
             'date_of_birth',
@@ -91,9 +105,9 @@ def user_processing(test_user_slug):
             'actors',
             'directors',
             'countries',
-            'rate'
-        ]]
-    )
+            'rate',
+        ]
+    ]
 
     df_test_merged['premiere_date'] = pd.to_datetime(
         df_test_merged['premiere_date']
@@ -139,31 +153,31 @@ def user_processing(test_user_slug):
     ].apply(stl.transform)
 
     # Преобразовываем data в DataFrame с нужным порядком столбцов
-    fixed_data = df_test_merged[[
-        'user',
-        'movie_id',
-        'genres',
-        'actors',
-        'favorited_genres',
-        'directors',
-        'countries',
-        'sex',
-        'date_of_birth',
-        'rate_imdb',
-        'rate_kinopoisk',
-        'duration_minutes',
-        'premiere_date',
-        'age_limit',
-        'rate'
-    ]]
+    fixed_data = df_test_merged[
+        [
+            'user',
+            'movie_id',
+            'genres',
+            'actors',
+            'favorited_genres',
+            'directors',
+            'countries',
+            'sex',
+            'date_of_birth',
+            'rate_imdb',
+            'rate_kinopoisk',
+            'duration_minutes',
+            'premiere_date',
+            'age_limit',
+            'rate',
+        ]
+    ]
 
     if len(fixed_data[fixed_data['rate'].isna()]) > 10:
         fixed_data = fixed_data[fixed_data['rate'].isna()]
 
     X_test_one_user_data = pd.DataFrame(
-        process2.transform(
-            fixed_data.drop('rate', axis=1)
-        )
+        process2.transform(fixed_data.drop('rate', axis=1))
     )
 
     one_user_input_user = np.array(X_test_one_user_data[8].astype(int))
@@ -178,38 +192,40 @@ def user_processing(test_user_slug):
     one_user_input_year = np.array(X_test_one_user_data[7])
 
     one_user_input_genres = np.array(
-        X_test_one_user_data[10].apply(
-            lambda x: x + [0] * (
-                fitted_metrics['len']['genres'] - len(x)
-            )).values.tolist()
+        X_test_one_user_data[10]
+        .apply(lambda x: x + [0] * (fitted_metrics['len']['genres'] - len(x)))
+        .values.tolist()
     )
 
     one_user_input_actors = np.array(
-        X_test_one_user_data[11].apply(
-            lambda x: x + [0] * (
-                fitted_metrics['len']['actors'] - len(x)
-            )).values.tolist()
+        X_test_one_user_data[11]
+        .apply(lambda x: x + [0] * (fitted_metrics['len']['actors'] - len(x)))
+        .values.tolist()
     )
 
     one_user_input_favorited_genres = np.array(
-        X_test_one_user_data[12].apply(
-            lambda x: x + [0] * (
-                fitted_metrics['len']['favorited_genres'] - len(x)
-            )).values.tolist()
+        X_test_one_user_data[12]
+        .apply(
+            lambda x: x
+            + [0] * (fitted_metrics['len']['favorited_genres'] - len(x))
+        )
+        .values.tolist()
     )
 
     one_user_input_directors = np.array(
-        X_test_one_user_data[13].apply(
-            lambda x: x + [0] * (
-                fitted_metrics['len']['directors'] - len(x)
-            )).values.tolist()
+        X_test_one_user_data[13]
+        .apply(
+            lambda x: x + [0] * (fitted_metrics['len']['directors'] - len(x))
+        )
+        .values.tolist()
     )
 
     one_user_input_countries = np.array(
-        X_test_one_user_data[14].apply(
-            lambda x: x + [0] * (
-                fitted_metrics['len']['countries'] - len(x)
-            )).values.tolist()
+        X_test_one_user_data[14]
+        .apply(
+            lambda x: x + [0] * (fitted_metrics['len']['countries'] - len(x))
+        )
+        .values.tolist()
     )
 
     one_user_inputs = [
@@ -227,10 +243,12 @@ def user_processing(test_user_slug):
         one_user_input_actors,
         one_user_input_favorited_genres,
         one_user_input_directors,
-        one_user_input_countries
+        one_user_input_countries,
     ]
 
-    return [arr.astype(np.float64) for arr in one_user_inputs], fixed_data['movie_id']
+    return [arr.astype(np.float64) for arr in one_user_inputs], fixed_data[
+        'movie_id'
+    ]
 
 
 def get_inference(data) -> list:
@@ -243,24 +261,29 @@ def get_inference(data) -> list:
         one_user_preds = model.predict(data[0]).flatten()
 
         one_user_results = pd.DataFrame(
-            {'movie_id': data[1].astype(int).tolist(),
-             'rate': one_user_preds}
+            {'movie_id': data[1].astype(int).tolist(), 'rate': one_user_preds}
         )
 
-        one_user_results_sampler = one_user_results.sort_values(
-            'rate', ascending=False
-        ).head(20).sample(n=10)
+        one_user_results_sampler = (
+            one_user_results.sort_values('rate', ascending=False)
+            .head(20)
+            .sample(n=10)
+        )
 
         return_list = one_user_results_sampler['movie_id'].tolist()
         if 0 in return_list:
             try:
-                one_best_film = pd.read_csv(
-                    UTILITY_PATH + 'cached_data/dflt_movies.csv'
-                ).sample()['movie_id'].tolist()
+                one_best_film = (
+                    pd.read_csv(UTILITY_PATH + 'cached_data/dflt_movies.csv')
+                    .sample()['movie_id']
+                    .tolist()
+                )
             except FileNotFoundError:
-                one_best_film = pd.read_csv(
-                    '.\\cached_data\\dflt_movies.csv'
-                ).sample()['movie_id'].tolist()
+                one_best_film = (
+                    pd.read_csv('.\\cached_data\\dflt_movies.csv')
+                    .sample()['movie_id']
+                    .tolist()
+                )
             finally:
                 index = return_list.index(0)
                 return_list[index] = one_best_film[0]

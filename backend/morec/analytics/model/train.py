@@ -6,8 +6,15 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 from keras.callbacks import ModelCheckpoint
-from keras.layers import (BatchNormalization, Concatenate, Dense, Embedding,
-                          Flatten, Input, LeakyReLU)
+from keras.layers import (
+    BatchNormalization,
+    Concatenate,
+    Dense,
+    Embedding,
+    Flatten,
+    Input,
+    LeakyReLU,
+)
 from keras.optimizers import Adam
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.compose import ColumnTransformer
@@ -44,18 +51,17 @@ class AddOne(BaseEstimator, TransformerMixin):
 
 
 def prepare_data(users_table, movies_table, ratings_table):
-
     cached_data_path = 'cached_data'
 
-    df_users = pd.read_csv(
-        f'.\\{cached_data_path}\\{users_table}'
-    ).rename(columns={'id': 'user', 'fav_genres.1': 'favorited_genres'})
-    df_movies = pd.read_csv(
-        f'.\\{cached_data_path}\\{movies_table}'
-    ).rename(columns={'id': 'movie_id'})
-    df_ratings = pd.read_csv(
-        f'.\\{cached_data_path}\\{ratings_table}'
-    ).rename(columns={'id': 'rate_id', 'movie': 'movie_id'})
+    df_users = pd.read_csv(f'.\\{cached_data_path}\\{users_table}').rename(
+        columns={'id': 'user', 'fav_genres.1': 'favorited_genres'}
+    )
+    df_movies = pd.read_csv(f'.\\{cached_data_path}\\{movies_table}').rename(
+        columns={'id': 'movie_id'}
+    )
+    df_ratings = pd.read_csv(f'.\\{cached_data_path}\\{ratings_table}').rename(
+        columns={'id': 'rate_id', 'movie': 'movie_id'}
+    )
 
     initial_columns_order = [
         'user',
@@ -93,12 +99,9 @@ def prepare_data(users_table, movies_table, ratings_table):
         'rate',
     ]
 
-    data = (
-        df_ratings
-        .merge(df_movies, how='left', on='movie_id')
-        .merge(df_users, how='left', on='user')
-        [initial_columns_order]
-    )
+    data = df_ratings.merge(df_movies, how='left', on='movie_id').merge(
+        df_users, how='left', on='user'
+    )[initial_columns_order]
 
     data['premiere_date'] = pd.to_datetime(data['premiere_date']).dt.year
     data['favorited_genres'] = data['favorited_genres'].fillna('0')
@@ -134,9 +137,9 @@ def prepare_data(users_table, movies_table, ratings_table):
     # Применение StringToList
     stl = StringToList()
     stl.fit(data[list_transform_columns])
-    data[list_transform_columns] = data[
-        list_transform_columns
-    ].apply(stl.transform)
+    data[list_transform_columns] = data[list_transform_columns].apply(
+        stl.transform
+    )
 
     # Преобразовываем data в DataFrame с нужным порядком столбцов
     fixed_data = data[new_columns_order_st1]
@@ -146,16 +149,12 @@ def prepare_data(users_table, movies_table, ratings_table):
             (
                 'ohe_features',
                 OneHotEncoder(sparse=False, drop='first'),
-                ohe_encoding_columns
+                ohe_encoding_columns,
             ),
-            (
-                'numerical_features',
-                MinMaxScaler(),
-                numerical_encoding_columns
-            ),
+            ('numerical_features', MinMaxScaler(), numerical_encoding_columns),
         ],
-        remainder='passthrough'
-        )
+        remainder='passthrough',
+    )
 
     preprocessor_st2.fit(fixed_data.drop('rate', axis=1))
 
@@ -170,7 +169,7 @@ def prepare_data(users_table, movies_table, ratings_table):
         'actors',
         'favorited_genres',
         'directors',
-        'countries'
+        'countries',
     ]:
         try:
             mins[i] = min(fixed_data[i].apply(lambda x: min(x)))
@@ -182,8 +181,8 @@ def prepare_data(users_table, movies_table, ratings_table):
 
     data_metrics_json = {'min': mins, 'max': maxs, 'n': ns, 'len': lens}
 
-    X_train = pd.DataFrame(preprocessor_st2.transform(
-        fixed_data.drop('rate', axis=1))
+    X_train = pd.DataFrame(
+        preprocessor_st2.transform(fixed_data.drop('rate', axis=1))
     )
 
     train_input_user = np.array(X_train[8].astype(int))
@@ -198,39 +197,46 @@ def prepare_data(users_table, movies_table, ratings_table):
     train_input_year = np.array(X_train[7])
 
     train_input_genres = np.array(
-        X_train[10].apply(
+        X_train[10]
+        .apply(
             lambda x: x + [0] * (data_metrics_json['len']['genres'] - len(x))
-        ).values.tolist()
+        )
+        .values.tolist()
     )
 
     train_input_actors = np.array(
-        X_train[11].apply(
+        X_train[11]
+        .apply(
             lambda x: x + [0] * (data_metrics_json['len']['actors'] - len(x))
-        ).values.tolist()
+        )
+        .values.tolist()
     )
 
     train_input_favorited_genres = np.array(
-        X_train[12].apply(
-            lambda x: x + [0] * (
-                data_metrics_json['len']['favorited_genres'] - len(x)
-            )
-        ).values.tolist()
+        X_train[12]
+        .apply(
+            lambda x: x
+            + [0] * (data_metrics_json['len']['favorited_genres'] - len(x))
+        )
+        .values.tolist()
     )
 
     train_input_directors = np.array(
-        X_train[13].apply(
-            lambda x: x + [0] * (
-                data_metrics_json['len']['directors'] - len(x)
-            )
-        ).values.tolist()
+        X_train[13]
+        .apply(
+            lambda x: x
+            + [0] * (data_metrics_json['len']['directors'] - len(x))
+        )
+        .values.tolist()
     )
 
     train_input_countries = np.array(
-        X_train[14].apply(
-            lambda x: x + [0] * (
-                data_metrics_json['len']['countries'] - len(x)
-            )
-        ).values.tolist()
+        X_train[14]
+        .apply(
+            lambda x: x
+            + [0] * (data_metrics_json['len']['countries'] - len(x))
+        )
+        .values.tolist()
     )
 
     train_inputs = [
@@ -248,7 +254,7 @@ def prepare_data(users_table, movies_table, ratings_table):
         train_input_actors,
         train_input_favorited_genres,
         train_input_directors,
-        train_input_countries
+        train_input_countries,
     ]
 
     joblib.dump(preprocessor_st1, 'stage1preprocessor')
@@ -256,24 +262,29 @@ def prepare_data(users_table, movies_table, ratings_table):
     with open('data_metrics.json', 'w') as f:
         json.dump(data_metrics_json, f)
 
-    return [arr.astype(np.float64) for arr in train_inputs], fixed_data['rate'], data_metrics_json
+    return (
+        [arr.astype(np.float64) for arr in train_inputs],
+        fixed_data['rate'],
+        data_metrics_json,
+    )
 
 
 def net(
-        learning_rate=0.001,
-        loss='mean_squared_error',
-        layer1_units=10,
-        layer2_units=5,
-        layer3_units=None,
-        layer4_units=None,
-        layer5_units=None,
-        layer6_units=None,
-        layer1_activation='relu',
-        layer2_activation='relu',
-        layer3_activation='relu',
-        layer4_activation='relu',
-        layer5_activation='relu',
-        layer6_activation='relu'):
+    learning_rate=0.001,
+    loss='mean_squared_error',
+    layer1_units=10,
+    layer2_units=5,
+    layer3_units=None,
+    layer4_units=None,
+    layer5_units=None,
+    layer6_units=None,
+    layer1_activation='relu',
+    layer2_activation='relu',
+    layer3_activation='relu',
+    layer4_activation='relu',
+    layer5_activation='relu',
+    layer6_activation='relu',
+):
     """
     Компиляция нейронной сети:
 
@@ -330,7 +341,7 @@ def net(
         output_dim=10,
         input_dim=int(data_metrics_json['max']['user']) + 5,
         input_length=1,
-        name='user_embedding'
+        name='user_embedding',
     )(layer_user_id)
     user_embedding = Flatten()(user_embedding)
 
@@ -339,7 +350,7 @@ def net(
         output_dim=10,
         input_dim=int(data_metrics_json['max']['movie_id']) + 5,
         input_length=1,
-        name='movie_embedding'
+        name='movie_embedding',
     )(layer_movie_id)
     movie_embedding = Flatten()(movie_embedding)
 
@@ -348,7 +359,7 @@ def net(
         output_dim=5,
         input_dim=data_metrics_json['max']['genres'] + 1,
         input_length=data_metrics_json['len']['genres'],
-        mask_zero=True
+        mask_zero=True,
     )(layer_genres)
     genres_embedding = Flatten()(genres_embedding)
 
@@ -357,7 +368,7 @@ def net(
         output_dim=5,
         input_dim=data_metrics_json['max']['actors'] + 10,
         input_length=data_metrics_json['len']['actors'],
-        mask_zero=True
+        mask_zero=True,
     )(layer_actors)
     actors_embedding = Flatten()(actors_embedding)
 
@@ -366,7 +377,7 @@ def net(
         output_dim=5,
         input_dim=data_metrics_json['max']['favorited_genres'] + 1,
         input_length=data_metrics_json['len']['favorited_genres'],
-        mask_zero=True
+        mask_zero=True,
     )(layer_favorites)
     favorites_embedding = Flatten()(favorites_embedding)
 
@@ -375,7 +386,7 @@ def net(
         output_dim=5,
         input_dim=data_metrics_json['max']['directors'] + 5,
         input_length=data_metrics_json['len']['directors'],
-        mask_zero=True
+        mask_zero=True,
     )(layer_directors)
     directors_embedding = Flatten()(directors_embedding)
 
@@ -384,7 +395,7 @@ def net(
         output_dim=5,
         input_dim=data_metrics_json['max']['countries'] + 1,
         input_length=data_metrics_json['len']['countries'],
-        mask_zero=True
+        mask_zero=True,
     )(layer_countries)
     countries_embedding = Flatten()(countries_embedding)
 
@@ -405,7 +416,7 @@ def net(
             actors_embedding,
             favorites_embedding,
             directors_embedding,
-            countries_embedding
+            countries_embedding,
         ]
     )
 
@@ -414,14 +425,14 @@ def net(
     x = Dense(
         layer1_units,
         activation=layer1_activation,
-        kernel_initializer='he_normal'
+        kernel_initializer='he_normal',
     )(x)
 
     x = BatchNormalization()(x)
     x = Dense(
         layer2_units,
         activation=layer2_activation,
-        kernel_initializer='he_normal'
+        kernel_initializer='he_normal',
     )(x)
 
     # Ниже второго слои создаются если в аргументах указано количество нейронов
@@ -431,7 +442,7 @@ def net(
         x = Dense(
             layer3_units,
             activation=layer3_activation,
-            kernel_initializer='he_normal'
+            kernel_initializer='he_normal',
         )(x)
 
     if layer4_units:
@@ -439,7 +450,7 @@ def net(
         x = Dense(
             layer4_units,
             activation=layer4_activation,
-            kernel_initializer='he_normal'
+            kernel_initializer='he_normal',
         )(x)
 
     if layer5_units:
@@ -447,7 +458,7 @@ def net(
         x = Dense(
             layer5_units,
             activation=layer5_activation,
-            kernel_initializer='he_normal'
+            kernel_initializer='he_normal',
         )(x)
 
     if layer6_units:
@@ -455,7 +466,7 @@ def net(
         x = Dense(
             layer6_units,
             activation=layer6_activation,
-            kernel_initializer='he_normal'
+            kernel_initializer='he_normal',
         )(x)
 
     # Выходной слой
@@ -478,20 +489,19 @@ def net(
             layer_actors,
             layer_favorites,
             layer_directors,
-            layer_countries
-        ], outputs=output
+            layer_countries,
+        ],
+        outputs=output,
     )
     model.compile(
-        optimizer=optimizer,
-        loss=loss,
-        metrics=['mean_absolute_error']
+        optimizer=optimizer, loss=loss, metrics=['mean_absolute_error']
     )
 
     return model
 
 
 def train(
-        model, X, y, batch_size=100, epochs=100, validation_split=.2, verbose=0
+    model, X, y, batch_size=100, epochs=100, validation_split=0.2, verbose=0
 ):
     """
     Функция обучает нейросеть
@@ -520,7 +530,9 @@ def train(
         epochs=epochs,
         validation_split=validation_split,
         verbose=verbose,
-        callbacks=[checkpoint]  # сохранение состояния сети на лучшей валидации
+        callbacks=[
+            checkpoint
+        ],  # сохранение состояния сети на лучшей валидации
     )
 
     return {'model': model, 'history': history}
@@ -528,37 +540,32 @@ def train(
 
 if __name__ == '__main__':
     model = net(
-            learning_rate=0.0025,
-            loss='mean_squared_error',
-            layer1_units=200,
-            layer2_units=150,
-            layer3_units=100,
-            layer4_units=20,
-            layer5_units=8,
-            layer6_units=2,
-            layer1_activation='relu',
-            layer2_activation=LeakyReLU(alpha=.2),
-            layer3_activation='relu',
-            layer4_activation=LeakyReLU(alpha=.2),
-            layer5_activation='relu',
-            layer6_activation=LeakyReLU(alpha=.2))
+        learning_rate=0.0025,
+        loss='mean_squared_error',
+        layer1_units=200,
+        layer2_units=150,
+        layer3_units=100,
+        layer4_units=20,
+        layer5_units=8,
+        layer6_units=2,
+        layer1_activation='relu',
+        layer2_activation=LeakyReLU(alpha=0.2),
+        layer3_activation='relu',
+        layer4_activation=LeakyReLU(alpha=0.2),
+        layer5_activation='relu',
+        layer6_activation=LeakyReLU(alpha=0.2),
+    )
 
     temporary_data = [
-            'User-2023-10-14.csv',
-            'Movie-2023-10-14.csv',
-            'RatingMovie-2023-10-14.csv'
-        ]
+        'User-2023-10-14.csv',
+        'Movie-2023-10-14.csv',
+        'RatingMovie-2023-10-14.csv',
+    ]
 
     train_data = prepare_data(
-        temporary_data[0],
-        temporary_data[1],
-        temporary_data[2]
+        temporary_data[0], temporary_data[1], temporary_data[2]
     )
 
     train(
-            model,
-            train_data[0],
-            train_data[1].values.astype('float64'),
-            90,
-            250
-        )
+        model, train_data[0], train_data[1].values.astype('float64'), 90, 250
+    )
