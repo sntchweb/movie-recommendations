@@ -1,5 +1,5 @@
 ## Описание проекта
-Проект представляет собой онлайн-платформу по рекомендациям фильмов.  
+Проект представляет собой онлайн-платформу по рекомендациям и подбору фильмов по жанрам.  
 ![Главная страница](https://github.com/sntchweb/movie-recommendations/blob/main/frontend/src/images/preview.jpg?raw=true)
 
 ## Что реализовано:
@@ -29,8 +29,6 @@ source venv/Scripts/activate
 pip install -r requirements.txt
 ```
 
-***
-
 ### Проброска порта для работы с бд
 
 В файле docker-compose.local.yml в разделе postgres_db сделать изменения.
@@ -50,8 +48,6 @@ pip install -r requirements.txt
 ```bash
 docker compose -f docker-compose.local.yml up --build
 ```
-
-***
 
 ### Доступ к проекту
 
