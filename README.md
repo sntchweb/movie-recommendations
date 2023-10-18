@@ -12,15 +12,7 @@
 - Расширенный поиск по фильмам с множественной фильтрацией (по жанру, стране, актеру, режиссеру, годам, рейтингу).
 - Отправка сообщение на e-mail со ссылкой для подтверждения регистрации на платформе.
 
-## Содержание
-
-- [Первичные настройки: окружение/зависимости](#окружениезависимости)
-- [Проброс порта для работы с Postgres в контейнере](#проброска-порта-для-работы-с-бд)
-- [Cборка контейнеров](#запуск-и-сборка-сети-контейнеров-docker)
-- [Доступ к проекту](#доступ-к-проекту)
-
 ***
-
 # Backend
 
 ### Окружение/зависимости
@@ -59,23 +51,24 @@ pip install -r requirements.txt
 docker compose -f docker-compose.local.yml up --build
 ```
 
-
 ***
 
 ### Доступ к проекту
 
-При запущенной сети контейнеров, нужно будет зайти в контейнер, применить миграции, и создать себе суперпользователя, также подгрузить статику.
+При запущенной сети контейнеров, нужно будет зайти в контейнер, применить миграции и подгрузить статику.
 
 ```bash
 cd devops
-docker compose -f docker-compose.local.yml exec backend python manage.py migrate
-docker compose -f docker-compose.local.yml exec backend python manage.py createsuperuser
 docker compose -f docker-compose.local.yml exec backend python manage.py collectstatic
+docker compose -f docker-compose.local.yml exec backend cp -r /app/static/. /static/static/
+docker compose -f docker-compose.local.yml exec backend python manage.py migrate
+
 ```
 
-Сайт будет доступен по адресу: 
+Сайт будет доступен по адресам:
 ```bash
-http://localhost:80/
+http://127.0.0.1/
+http://localhost/
 ```
 ***
 
@@ -97,3 +90,12 @@ Redis 4.6
 PostgreSQL 13.4  
 TypeScript  
 CSS  
+
+## Авторы проекта:
+- Backend: Ибрагимов Рабадан, Лашин Артём, Ромашков Александр, Минаев Александр
+- Frontend: Тимур Салахутдинов, Попов Дмитрий, Антон Лысцов, Мачехин Арсений, Винник Алексей
+- QA: Анна Король, Роман Третьяков, Юлия Лукина, Макарьина Татьяна, Липчанов Андрей
+- UI/UX: Кильсенбаева Айсылу, Александр Баранов
+- SA: Смехова Ольга, Хохлов Влад
+- DS: Евгений Прудовский
+- PM: Гужиева Наталья
