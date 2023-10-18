@@ -12,7 +12,7 @@ if dotenv_file.is_file():
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = True if os.environ.get('DEBUG') == 'True' else False
+DEBUG = os.environ.get('DEBUG').lower() == 'true'
 
 ALLOWED_HOSTS = ['*']
 
@@ -20,32 +20,12 @@ CORS_ALLOWED_ORIGINS = [
     'http://kinotochka.acceleratorpracticum.ru',
     'http://localhost:3000',
     'http://localhost:8000',
-    'http://80.87.109.207',
-    'http://80.87.109.242',
-    'http://80.87.109.33',
-    'http://80.87.109.84',
-    'http://80.87.109.234',
-    'http://bugaton1.acceleratorpracticum.ru',
-    'http://bugaton2.acceleratorpracticum.ru',
-    'http://bugaton3.acceleratorpracticum.ru',
-    'http://bugaton4.acceleratorpracticum.ru',
-    'http://bugaton5.acceleratorpracticum.ru',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://kinotochka.acceleratorpracticum.ru',
     'http://localhost:3000',
     'http://localhost:8000',
-    'http://80.87.109.207',
-    'http://80.87.109.242',
-    'http://80.87.109.33',
-    'http://80.87.109.84',
-    'http://80.87.109.234',
-    'http://bugaton1.acceleratorpracticum.ru',
-    'http://bugaton2.acceleratorpracticum.ru',
-    'http://bugaton3.acceleratorpracticum.ru',
-    'http://bugaton4.acceleratorpracticum.ru',
-    'http://bugaton5.acceleratorpracticum.ru',
 ]
 
 INSTALLED_APPS = [
@@ -60,14 +40,13 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_filters',
     'import_export',
-    'social_django',
 ]
 
 PROJECT_APPS = [
     'api',
     'users',
     'movies',
-    # 'analytics',
+    'analytics',
 ]
 
 INSTALLED_APPS += PROJECT_APPS
@@ -81,14 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
-
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.yandex.YandexOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-)
 
 ROOT_URLCONF = 'morec.urls'
 
@@ -103,8 +75,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -136,9 +106,11 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static-backend/'
+
 STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = 'media/'
+
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
