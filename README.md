@@ -80,6 +80,7 @@ npm start // localhost:3000
 
 ## Стек:
 Python 3.11  
+Django 4.2  
 Django Rest framewrok 3.14  
 Celery 5.3  
 Redis 4.6  
